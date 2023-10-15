@@ -24,6 +24,7 @@
                 :key="field.component + '-' + index"
                 ref="wizardComponents"
                 :is="'form-' + field.component"
+                :data-attribute="field.attribute"
                 :errors="errors"
                 showErrors="true"
                 :field="field"
@@ -179,6 +180,7 @@ export default {
                 }
                 else if(error.response.status === 422) {
                   this.errors = new Errors(error.response.data.errors);
+                  this.jumpToFirstStepWithError();
                 }
                 // console.log('Error status:', error.response.status);
                 // console.log('Error data:', error.response.data);
@@ -191,6 +193,51 @@ export default {
       } else {
         console.warn('wizardForm reports validity false');
       }
+    },
+    
+    focusOnFirstFieldInStep() { 
+        let attribute = this.steps[this.currentStep].fields[0].attribute;
+        if(this.errors.any()) {   
+            let found = false;
+            this.steps[this.currentStep].fields.forEach((field) => {
+                if(!found && this.errors.has(field.attribute)) {   
+                    attribute = field.attribute;
+                    found = true;
+                }
+            });
+        }
+        
+        const divElement = document.querySelector('div[data-attribute="' + attribute + '"]');
+        if(divElement) {
+            const firstInput = divElement.querySelector('input');
+            if (firstInput) {
+              firstInput.focus();
+            }
+        }
+    },
+    
+    jumpToFirstStepWithError() {
+        if(!this.errors.any()) {
+            return;
+        }
+        
+        let targetStep = -1;
+        let stepIndex = 0;
+        this.steps.forEach((step) => {
+            if(targetStep == -1) {
+              step.fields.forEach((field) => {
+                  if(targetStep == -1 && this.errors.has(field.attribute)) {
+                    targetStep = stepIndex;
+                  }
+              });
+            }
+            stepIndex++;
+        });
+        
+        if(targetStep > -1) {
+          this.currentStep = targetStep;
+          this.updateScrollPosition(1);
+        }
     },
     
     updateScrollPosition(animate) {
@@ -213,6 +260,10 @@ export default {
         width: `${percentage}%`,
         ease: 'power2.out' // Easing function
       });
+      
+      setTimeout(() => {
+        this.focusOnFirstFieldInStep();
+      }, animate * 1000);
     },
   },
   
