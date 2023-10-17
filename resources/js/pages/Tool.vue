@@ -1,5 +1,5 @@
 <template>
-  <div class="nova-wizard">
+  <div class="nova-wizard" :class="{ finished: !!finished }">
     <Head title="Nova Wizard" />
 
     <Card
@@ -11,12 +11,13 @@
       <div id="progress-bar"></div>
     </div>
 
-    <form id="wizardForm">
+    <form id="wizardForm" v-if="!finished">
       <div class="step-container">
+      
           <template v-for="(step, index) in steps">
       
             <div class="step-wrapper">
-              <Heading class="mb-6">{{ step.title }}</Heading>
+              <h1>{{ step.title }}</h1>
       
               <component
                 class="step-field"
@@ -25,6 +26,7 @@
                 ref="wizardComponents"
                 :is="'form-' + field.component"
                 :data-attribute="field.attribute"
+                :options="field.options"
                 :errors="errors"
                 showErrors="true"
                 :field="field"
@@ -36,10 +38,14 @@
 
       </div>
     </form>
-          
+
+    <div v-if="!!finished" class="finished">
+      <h1 v-html="finishedMessage"></h1>
+    </div>
+
     </Card>
     
-    <div class="step-buttons">
+    <div v-if="!finished" class="step-buttons">
       <DefaultButton v-if="currentStep == steps.length - 1" class="button" align="center" @click="submitButton()">
         {{ __('Submit') }}
       </DefaultButton>
@@ -54,7 +60,13 @@
         {{ __('Previous') }}
       </ToolbarButton>
     </div>
-    
+
+    <div v-if="finished" class="reset-button">
+      <OutlineButton v-if="finished" class="button" align="center" @click="resetButton()">
+        <Icon class="icon" type="refresh" />
+        {{ __('Start over') }}
+      </OutlineButton>
+    </div>
   </div>
 </template>
 
@@ -117,8 +129,12 @@ export default {
         vue.styles = response.data.styles;
         vue.windowTitle = response.data.windowTitle;
         vue.title = response.data.title;
-        vue.steps = response.data.steps;
+        vue.steps = response.data.steps || [];
         vue.loading = false;
+        vue.finished = !!response.data.success;
+        if(!!response.data.success) {
+          vue.finishedMessage = response.data.message || '✅';
+        }
         // this.storeSettings();
     },
     
@@ -143,6 +159,14 @@ export default {
     previousButton() {
       this.currentStep -= 1;
       this.updateScrollPosition(0.8);
+    },
+    
+    resetButton() {
+      this.finished = false;
+      this.errors = new Errors();
+      this.reload();
+      this.currentStep = 0;
+      this.updateScrollPosition(0);
     },
     
     currentStepData() {
@@ -275,6 +299,8 @@ export default {
           windowTitle: '',
           allWizardFields:[],
           errors: new Errors(),
+          finished: false,
+          finishedMessage: '✅',
           title: '',
           steps:[],
           styles: {
