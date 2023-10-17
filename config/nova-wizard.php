@@ -14,32 +14,33 @@
  *     of it in free or paid-for software libraries and packages aimed at developers).
  */
 
-use App\Nova\Wizards\CreateFlightWizard;
+use App\Nova\Wizards\AddUserWizard;
 
 return [
 
-    'create-flight' => [
+    'add-user' => [
 
         /*
          * The class of the Nova Wizard.
            Don't forget to add the proper use statement above.
            This key is required.
          */
-        'class' => CreateFlightWizard::class
+        'class' => AddUserWizard::class,
 
         /*
          * URI for this wizard (will be appended to the Nova path, /nova by default)
            This key is required.
          */
-        'uri' => 'wizard/create-flight',
+        'uri' => 'wizard/add-user',
 
         /*
          * Browser window/tab title for this Nova Wizard.
            This key is optional.
-           If you remove it or set it to an empty string, the dynamic title displayed above 
+           If you remove it or set it to an empty string, the dynamic title displayed above
            the wizard view will be used as window/tab title in the browser.
          */
-        'windowTitle' => 'Wizard',
+        'windowTitle' => 'Add User',
 
     ],
+    
 ];
