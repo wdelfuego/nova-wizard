@@ -70,7 +70,8 @@ Basically, the only condition is that you can't sublicense the package or embed 
 
 1. Finally, implement the wizard;
 	- Create the class file for your wizard. It can go wherever you want, but `/app/Nova/Wizards` is a good default location if you have no preference.
-    - Implement the class to extend `Wdelfuego\NovaWizard\AbstractWizard`
+    - Make sure you correctly specify that class for the wizard in `config/nova-wizard.php`
+    - Implement the class to extend `Wdelfuego\NovaWizard\AbstractWizard`.
     - You only need to implement the following three methods:
         - `wizardViewData() : array`  to define the steps and fields in your wizard, like this:
             ```php
