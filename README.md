@@ -5,7 +5,7 @@
 # License summary
 Anyone can use and modify this package in any way they want, including commercially, as long as the commercial use is a) creating implemented wizards and/or b) using the implemented wizards.
 
-Basically, the only condition is that you can't sublicense the package or embed it in a framework (unless you do so under the AGPLv3 license). Usage in Nova is not compatible with the AGPLv3 license. More details [below](#license).
+Basically, the only condition is that you can't sublicense the package or embed it in a framework unless you do so under the AGPLv3 license (which is incompatible with the Nova framework). More details [below](#license).
 
 # Installation
 
