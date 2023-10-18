@@ -1,6 +1,10 @@
 <h1 align="center">Multi-step Wizards for Laravel Nova 4</h1>
 
-<p align="center">Allows you to construct multi-step wizard forms, supports all native and custom Fields  in your Laravel Nova 4 application.</p>
+<p align="center">
+Allows you to construct multi-step wizard forms, supports all native and custom Fields  in your Laravel Nova 4 application.</p>
+
+![Wizard screenshot](https://github.com/wdelfuego/nova-wizard/blob/main/doc/screenshots/screenshot.jpg?raw=true)
+
 
 # License summary
 Anyone can use and modify this package in any way they want, including commercially, as long as the commercial use is a) creating implemented wizards and/or b) using the implemented wizards.
