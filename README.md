@@ -147,7 +147,7 @@ Basically, the only condition is that you can't sublicense the package or embed 
 			public function successViewData($context) : array {
         
 				return [
-					'message' => 'Successfully created user with id: ' .$context['newUserId'];
+					'message' => 'Successfully created user with id: ' .$context['newUserId']
 				];
 			}
     		```
