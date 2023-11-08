@@ -119,7 +119,7 @@ Basically, the only condition is that you can't sublicense the package or embed 
 
         - `onSubmit($formData, &$context) : bool` to specify what to do when valid wizard data is submitted, like this:
             ```php
-			public function onSubmit($formData, &$context) : bool
+			public function onSubmit($formData, &$context) : bool {
 				//
 				// When this method gets called, a valid and complete wizard was submitted.
 				//
