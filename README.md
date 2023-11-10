@@ -82,36 +82,37 @@ Basically, the only condition is that you can't sublicense the package or embed 
             use Laravel\Nova\Fields;
 
 			public function wizardViewData() : array {
-				return ['steps' => 
-					[
-						'title' => 'Step 1/2',
-						'fields' => [
-							// You can use all native Nova fields and custom fields that are available in your project
-							Fields\Text::make(__('Username'), 'username'),
-							Fields\Text::make(__('Text field'), 'myText'),
-							Fields\Textarea::make(__('Longer text'), 'myLongerText')
-	 							->help("You can use Help texts on Nova fields like you're used to"),
-							Fields\Number::make(__('Some number'), 'myNumber')
-								->rules('required')
-								->withMeta(['value' => 60])
-								->min(1)
-								->step(1),
-						]
-					],
-					[
-						'title' => 'Step 2/2',
-						'fields' => [
-							Fields\Text::make(__('Text field 2'), 'myText2'),
-							Fields\Textarea::make(__('Longer text 2'), 'myLongerText2')
-	 							->help("You can use Help texts on Nova fields like you're used to"),
-							Fields\Number::make(__('Some number 2'), 'myNumber2')
-								->rules('required')
-								->withMeta(['value' => 60])
-								->min(1)
-								->step(1),
-						]
-					],
-				];
+                return [
+                    'steps' => [
+                        [
+                            'title'  => 'Step 1/2',
+                            'fields' => [
+                                Fields\Text::make(__('Username'), 'username'),
+                                Fields\Text::make(__('Text field'), 'myText'),
+                                Fields\Textarea::make(__('Longer text'), 'myLongerText')
+                                    ->help("You can use Help texts on Nova fields like you're used to"),
+                                Fields\Number::make(__('Some number'), 'myNumber')
+                                    ->rules('required')
+                                    ->withMeta(['value' => 60])
+                                    ->min(1)
+                                    ->step(1),
+                            ],
+                        ],
+                        [
+                            'title'  => 'Step 2/2',
+                            'fields' => [
+                                Fields\Text::make(__('Text field 2'), 'myText2'),
+                                Fields\Textarea::make(__('Longer text 2'), 'myLongerText2')
+                                    ->help("You can use Help texts on Nova fields like you're used to"),
+                                Fields\Number::make(__('Some number 2'), 'myNumber2')
+                                    ->rules('required')
+                                    ->withMeta(['value' => 60])
+                                    ->min(1)
+                                    ->step(1),
+                            ],
+                        ],
+                    ],
+                ];
 			}
     		```
 
