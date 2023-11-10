@@ -63,7 +63,7 @@ Basically, the only condition is that you can't sublicense the package or embed 
 		}
 		```
 
-	- If you manually specify your application menu in the `boot()` method, add a `MenuSection` or `MenuItem` that links to this wizard.
+	- If you manually specify your application menu in the `boot()` method, add a `MenuSection` or `MenuItem` in addition to the tools(), that links to this wizard.
 
         Specify the wizard key so the correct URL can be generated, like this:
 
