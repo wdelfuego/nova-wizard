@@ -18,6 +18,7 @@ class ToolServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->addFieldDefinitionRoute();
         $this->app->booted(function () {
             $this->routes();
         });
@@ -61,6 +62,16 @@ class ToolServiceProvider extends ServiceProvider
               }
           }
         }
+    }
+
+    protected function addFieldDefinitionRoute()
+    {
+        Route::prefix('nova-api')->group(function() {
+            Route::patch(
+                '/step/{step}/creation-fields',
+                '\Wdelfuego\NovaWizard\Http\Controllers\WizardController@getFieldDefinition'
+            );
+        });
     }
 
     /**
