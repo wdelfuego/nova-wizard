@@ -185,7 +185,7 @@ export default {
             }
           });
           
-          let apiUrl = '/nova-vendor/wdelfuego/nova-wizard' + this.instanceUrl();
+          let apiUrl = '/nova-vendor/wdelfuego/nova-wizard' + this.instanceUrl() + window.location.search;
           Nova.request().post(apiUrl, formData)
             .then(response => { 
               if(response.status === 200) {
@@ -204,8 +204,6 @@ export default {
                   this.errors = new Errors(error.response.data.errors);
                   this.jumpToFirstStepWithError();
                 }
-                // console.log('Error status:', error.response.status);
-                // console.log('Error data:', error.response.data);
               }
             });
             
