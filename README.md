@@ -157,6 +157,26 @@ Basically, the only condition is that you can't sublicense the package or embed 
 
 Repeat step 3 to 5 from the Installation steps above for every wizard you want to add to your Laravel Nova app.
 
+# Advanced usage
+
+## Using query parameters
+
+As of version 1.1, thanks to a contribution by @olliescase, you can pass query parameters to your wizard URL, that will then be available within the wizard definition so
+you can customize your wizard or pre-fill certain fields based on the query parameter values.
+
+For example, if you want to use a wizard to do something in the context of a specific Nova resource instance, you could create a Nova `Action` that returns a parametrized URL:
+
+    return $this->redirect('/' . NovaWizard::pathToWizard('my-wizard') . "?parentId={$resource->id}");
+
+Then in the wizard definition you can get the specified parameter value like this:
+
+    $this->request->get('parentId')
+
+
+Or, if you want to use the same wizard definition for two slightly different forms, you could add it to the application menu twice, but differentiate using a query parameter.
+You can then get the value of that query parameter in the wizard definition using `$this->request->get('paramName')` so you can customize the wizard fields and how submissions are processed depending on the context.
+
+
 # Support & Documentation
 
 For any problems or doubts you might run into, please [open an issue](https://github.com/wdelfuego/nova-wizard/issues) on GitHub.
