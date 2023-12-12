@@ -103,14 +103,11 @@ export default {
   methods: {
 
     init() {
-      // if(this.hasStoredSettings()) {
-      //   this.restoreSettings();
-      //   this.reload(false);
+      // if(this.hasStoredState()) {
+      //   this.restoreState();
       // }
-      // else
-      // {
-            this.reload();
-      // }
+
+      this.reload();
     },
     
     reload() {
@@ -135,7 +132,7 @@ export default {
         if(!!response.data.success) {
           vue.finishedMessage = response.data.message || '✅';
         }
-        // this.storeSettings();
+        // this.storeState();
     },
     
     instanceUrl() {
@@ -220,23 +217,30 @@ export default {
     },
     
     focusOnFirstFieldInStep() { 
-        let attribute = this.steps[this.currentStep].fields[0].attribute;
-        if(this.errors.any()) {   
-            let found = false;
-            this.steps[this.currentStep].fields.forEach((field) => {
-                if(!found && this.errors.has(field.attribute)) {   
-                    attribute = field.attribute;
-                    found = true;
-                }
-            });
-        }
+        if(this.currentStep > -1 
+            && this.steps[this.currentStep] 
+            && Array.isArray(this.steps[this.currentStep].fields)
+            && this.steps[this.currentStep].fields.length > 0)
+        {
+
+          let attribute = this.steps[this.currentStep].fields[0].attribute;
+          if(this.errors.any()) {   
+              let found = false;
+              this.steps[this.currentStep].fields.forEach((field) => {
+                  if(!found && this.errors.has(field.attribute)) {   
+                      attribute = field.attribute;
+                      found = true;
+                  }
+              });
+          }
         
-        const divElement = document.querySelector('div[data-attribute="' + attribute + '"]');
-        if(divElement) {
-            const firstInput = divElement.querySelector('input');
-            if (firstInput) {
-              firstInput.focus();
-            }
+          const divElement = document.querySelector('div[data-attribute="' + attribute + '"]');
+          if(divElement) {
+              const firstInput = divElement.querySelector('input');
+              if (firstInput) {
+                firstInput.focus();
+              }
+          }
         }
     },
     
