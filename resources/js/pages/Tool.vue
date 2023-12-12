@@ -115,7 +115,8 @@ export default {
       
       // Work out the apiPath from the current Tool path, this works
       // because the ToolServiceProvider enforces that both use the same configurable uri part
-      let apiUrl = '/nova-vendor/wdelfuego/nova-wizard' + this.instanceUrl();
+      // + pass forwards the query params
+      let apiUrl = '/nova-vendor/wdelfuego/nova-wizard' + this.instanceUrl() + window.location.search;
       Nova.request().get(apiUrl)
         .then(response => { this.reloadFromResponse(response); });
     },
