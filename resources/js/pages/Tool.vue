@@ -271,12 +271,15 @@ export default {
     updateScrollPosition(animate) {
       const container = document.querySelector('.nova-wizard .step-container');
 
-      gsap.to(container, {
-        duration: animate, // Animation duration in seconds
-        scrollLeft: container.clientWidth * this.currentStep,
-        ease: 'power2.out' // Easing function
-      });
-      
+      if(container)
+      {
+        gsap.to(container, {
+          duration: animate, // Animation duration in seconds
+          scrollLeft: container.clientWidth * this.currentStep,
+          ease: 'power2.out' // Easing function
+        });      
+      }
+
       const progressBar = document.getElementById('progress-bar');
       let percentage = 0;
       if(this.steps.length > 1) {
