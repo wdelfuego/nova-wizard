@@ -7,6 +7,7 @@ use Illuminate\Support\ServiceProvider;
 use Laravel\Nova\Events\ServingNova;
 use Laravel\Nova\Http\Middleware\Authenticate;
 use Laravel\Nova\Nova;
+use Wdelfuego\NovaWizard\Http\Controllers\WizardController;
 use Wdelfuego\NovaWizard\Http\Middleware\Authorize;
 
 class ToolServiceProvider extends ServiceProvider
@@ -64,12 +65,15 @@ class ToolServiceProvider extends ServiceProvider
         }
     }
 
-    protected function addFieldDefinitionRoute()
+    /**
+     * @return void
+     */
+    protected function addFieldDefinitionRoute(): void
     {
         Route::prefix('nova-api')->group(function() {
             Route::patch(
                 '/step/{step}/creation-fields',
-                '\Wdelfuego\NovaWizard\Http\Controllers\WizardController@getFieldDefinition'
+                [WizardController::class, 'getFieldDefinition']
             );
         });
     }
