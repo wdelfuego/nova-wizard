@@ -132,12 +132,6 @@ export default {
         vue.title = response.data.title;
         vue.steps = response.data.steps || [];
         vue.computedInstanceUrl = this.instanceUrl();
-        vue.steps = vue.steps.map((step) => {
-            step.fields.map((field) => {
-                return field;
-            });
-            return step;
-        });
         vue.loading = false;
         vue.finished = !!response.data.success;
         if(!!response.data.success) {
