@@ -134,10 +134,6 @@ export default {
         vue.computedInstanceUrl = this.instanceUrl();
         vue.steps = vue.steps.map((step) => {
             step.fields.map((field) => {
-                console.log('load syncFieldEndpoint', field.methods);
-                field.computed.syncFieldEndpoint = () => {
-                    console.log('syncFieldEndpoint', field);
-                }
                 return field;
             });
             return step;
@@ -235,7 +231,6 @@ export default {
         if(this.errors.any()) {
             let found = false;
             this.steps[this.currentStep].fields.forEach((field) => {
-                console.log(field);
                 if(!found && this.errors.has(field.attribute)) {
                     attribute = field.attribute;
                     found = true;
