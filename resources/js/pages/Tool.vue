@@ -104,14 +104,11 @@ export default {
   methods: {
 
     init() {
-      // if(this.hasStoredSettings()) {
-      //   this.restoreSettings();
-      //   this.reload(false);
+      // if(this.hasStoredState()) {
+      //   this.restoreState();
       // }
-      // else
-      // {
-            this.reload();
-      // }
+
+      this.reload();
     },
 
     reload() {
@@ -189,7 +186,7 @@ export default {
             }
           });
 
-          let apiUrl = '/nova-vendor/wdelfuego/nova-wizard' + this.instanceUrl();
+          let apiUrl = '/nova-vendor/wdelfuego/nova-wizard' + this.instanceUrl() + window.location.search;
           Nova.request().post(apiUrl, formData)
             .then(response => {
               if(response.status === 200) {
@@ -208,8 +205,6 @@ export default {
                   this.errors = new Errors(error.response.data.errors);
                   this.jumpToFirstStepWithError();
                 }
-                // console.log('Error status:', error.response.status);
-                // console.log('Error data:', error.response.data);
               }
             });
 
@@ -222,23 +217,30 @@ export default {
     },
 
     focusOnFirstFieldInStep() {
-        let attribute = this.steps[this.currentStep].fields[0].attribute;
-        if(this.errors.any()) {
-            let found = false;
-            this.steps[this.currentStep].fields.forEach((field) => {
-                if(!found && this.errors.has(field.attribute)) {
-                    attribute = field.attribute;
-                    found = true;
-                }
-            });
-        }
+        if(this.currentStep > -1
+            && this.steps[this.currentStep]
+            && Array.isArray(this.steps[this.currentStep].fields)
+            && this.steps[this.currentStep].fields.length > 0)
+        {
 
-        const divElement = document.querySelector('div[data-attribute="' + attribute + '"]');
-        if(divElement) {
-            const firstInput = divElement.querySelector('input');
-            if (firstInput) {
-              firstInput.focus();
-            }
+          let attribute = this.steps[this.currentStep].fields[0].attribute;
+          if(this.errors.any()) {
+              let found = false;
+              this.steps[this.currentStep].fields.forEach((field) => {
+                  if(!found && this.errors.has(field.attribute)) {
+                      attribute = field.attribute;
+                      found = true;
+                  }
+              });
+          }
+
+          const divElement = document.querySelector('div[data-attribute="' + attribute + '"]');
+          if(divElement) {
+              const firstInput = divElement.querySelector('input');
+              if (firstInput) {
+                firstInput.focus();
+              }
+          }
         }
     },
 
@@ -269,12 +271,14 @@ export default {
     updateScrollPosition(animate) {
       const container = document.querySelector('.nova-wizard .step-container');
 
-      gsap.to(container, {
-        duration: animate, // Animation duration in seconds
-        scrollLeft: container.clientWidth * this.currentStep,
-        ease: 'power2.out' // Easing function
-      });
-
+      if(container)
+      {
+        gsap.to(container, {
+          duration: animate, // Animation duration in seconds
+          scrollLeft: container.clientWidth * this.currentStep,
+          ease: 'power2.out' // Easing function
+        });
+      }
       const progressBar = document.getElementById('progress-bar');
       let percentage = 0;
       if(this.steps.length > 1) {
