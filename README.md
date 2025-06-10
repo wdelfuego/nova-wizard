@@ -5,6 +5,10 @@ Allows you to construct multi-step wizard forms, supports all native and custom 
 
 ![Wizard screenshot](https://github.com/wdelfuego/nova-wizard/blob/main/doc/screenshots/screenshot.jpg?raw=true)
 
+# Package is abandoned
+As of 2025, I have moved my development efforts to [Filament](https://filamentphp.com) and am no longer using or working on this package.
+
+You are free to make and distribute modified versions of this package publicly as long as you distribute it for free, as a stand-alone package and under the same dual licensing model.
 
 # License summary
 Anyone can use and modify this package in any way they want, including commercially, as long as the commercial use is a) creating implemented wizards and/or b) using the implemented wizards.
@@ -175,7 +179,6 @@ Then in the wizard definition you can get the specified parameter value like thi
 
 Or, if you want to use the same wizard definition for two slightly different forms, you could add it to the application menu twice, but differentiate using a query parameter.
 You can then get the value of that query parameter in the wizard definition using `$this->request->get('paramName')` so you can customize the wizard fields and how submissions are processed depending on the context.
-
 
 # Support & Documentation
 
